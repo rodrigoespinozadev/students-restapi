@@ -25,8 +25,8 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: restapi
-      MYSQL_USER: restapi
+      MYSQL_DATABASE: students
+      MYSQL_USER: students
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
     networks:

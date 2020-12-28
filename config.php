@@ -10,8 +10,8 @@ define('DATABASE', [
     'port'   => 3306,
     'hostname'   => 'mysql',
     'driver' => 'PDO',
-    'database'   => 'restapi',
-    'username'   => 'restapi',
+    'database'   => 'students',
+    'username'   => 'students',
     'password'   => 'secret'
 ]);
 

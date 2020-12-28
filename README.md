@@ -32,4 +32,13 @@ If you are on Apache, you can use an .htaccess file such as
 </IfModule>
 ```
 
+<h2>Docker</h2>
+
+If using Docker you can start the server using docker-compose with the following command:
+> you must be inside the root folder of project it will build an apache server and start a mysql database instance
+
+```
+docker-compose up
+```
+
 Built by [Rodrigo Espinoza]()
