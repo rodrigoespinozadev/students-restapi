@@ -1,0 +1,35 @@
+version: '3'
+
+networks:
+  rest_api:
+
+services:
+  http:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: rest_apache
+    container_name: rest_http
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - rest_api
+
+  mysql:
+    image: mariadb
+    container_name: rest_mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: restapi
+      MYSQL_USER: restapi
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+    networks:
+      - rest_api
+    volumes:
+      - ./mysql:/var/lib/mysql

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>LMS - Users</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+		rel="stylesheet">
+</head>
+
+<body>
+	<div class="min-h-screen  bg-gray-50 sm:px-6 lg:px-8">
+		<nav class="flex items-center justify-between flex-wrap bg-white py-4 lg:px-12 border-solid">
+			<img src="./svg/Logo.svg">
+			<div class="menu w-full lg:block flex-grow lg:flex lg:items-center lg:w-auto lg:px-3 px-8">
+				<div class="flex ">
+					<a href="#" id="logout_btn" class="block text-md px-4  ml-2 py-2 rounded text-white font-bold mt-4 bg-yellow-700 lg:mt-0">Logout</a>
+				</div>
+			</div>
+		</nav>
+		<div class="min-h-screen px-4 py-3 items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8">
+			<div>
+				<h2 class="m-2 text-center text-2xl text-gray-900">
+					User List
+				</h2>
+				<table id="table_users" class="min-w-full divide-gray-200">
+				</table>
+				<div class="hidde bg-white sm:px-6">
+					<div class="sm:flex-1 sm:flex sm:items-center sm:justify-between">
+						<div>
+							<nav class="relative z-0 inline-flex shadow-sm -space-x-px"
+								aria-label="Pagination">
+								<a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+									1
+								</a>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="./script.js" async defer></script>
+	<script>validateLogged();</script>
+</body>
+
+</html>
