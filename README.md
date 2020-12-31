@@ -1,5 +1,12 @@
 ## Students Rest Api Example
 
+```
+Admin user access:
+username: admin
+password: password
+```
+
+
 ## Requirements</h3>
 
 * PHP 7.1+
