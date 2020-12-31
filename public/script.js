@@ -11,9 +11,10 @@ var remember_me = document.getElementById('remember_me');
 var alert_message = document.getElementById('alert_message');
 var table_users = document.getElementById('table_users');
 var logout_btn = document.getElementById('logout_btn');
-
 var page = 1;
 var default_response = {'results':[], 'pager': { 'total': 0, 'pages': 0 }};
+var activeClasses = ['text-white', 'bg-yellow-700'];
+var inactiveClasses = ['text-gray-700', 'hover:bg-gray-50'];
 
 if (logout_btn) {
 	logout_btn.addEventListener('click', function(event) {
@@ -73,8 +74,8 @@ function redirect(path) {
 	window.location.href = path;
 }
 
-function loadStudents() {
-	fetch(apiEndpoints.users)
+function loadStudents(page, callback) {
+	fetch(apiEndpoints.users + '?page=' + page)
 	.then(function(response) {
 		if (response.status == 200) {
 			return response.json();
@@ -82,7 +83,7 @@ function loadStudents() {
 		return default_response;
 	})
 	.then(function(result) {
-		buildTableResults(result['results']);
+		callback(result)
 	});
 }
 
@@ -92,12 +93,42 @@ function buildTableResults(rows) {
 	}
 }
 
+function buildPagination(pager) {
+	var pagination = document.getElementById('pagination');
+
+	for (let i=1; i<=pager.pages; i++) {
+		pagination.innerHTML += paginationLinks(i);
+	}
+}
+
 function validateLogged() {
 	if (!readCookie('is_logged')) {
 		return redirect('/index.html');
 	}
 
-	loadStudents();
+	loadStudents(page, function(result) {
+		buildTableResults(result['results']);
+		buildPagination(result['pager']);
+		var element = document.getElementById('page_' + page);
+		addClasses(element, activeClasses);
+	});
+}
+
+function paginateResults(page_num) {
+	loadStudents(page_num, function(result) {
+		table_users.innerHTML = '';
+		buildTableResults(result['results']);
+		var pages = document.querySelectorAll("a[id*='page_']");
+		let page_string;
+		for (p of pages) {
+			page_string = `page_${page_num}`;
+			if (page_string == p.id) {
+				toggleClasses(p, activeClasses, inactiveClasses);
+			} else {
+				removeClasses(p, activeClasses);
+			}
+		}
+	})
 }
 
 function tableTemplate(data) {
@@ -119,6 +150,32 @@ function tableTemplate(data) {
 		</td> \
 		</tr>'
 	);
+}
+
+function paginationLinks(page_num) {
+	return (`
+		<a 
+			id="page_${page_num}"
+			href="#" 
+			onclick="paginateResults(${page_num}); return false;"
+			class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium"
+		>
+			${page_num}
+		</a>
+	`)
+}
+
+function removeClasses(element, classes) {
+	element.classList.remove(...classes);
+}
+
+function addClasses(element, classes) {
+	element.classList.add(...classes);
+}
+
+function toggleClasses(element, add, remove) {
+	element.classList.remove(...remove);
+	element.classList.add(...add);
 }
 
 function readCookie(name) {
